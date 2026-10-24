@@ -1,0 +1,31 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Editor / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Secrets and local env
+.env
+*.env
+
+# Local dev-server output
+*.log
+*.pid
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Large / regenerable outputs (retrain with `python -m src.train`)
+reports/figures/*.png
+!reports/figures/.gitkeep
