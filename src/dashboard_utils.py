@@ -1,4 +1,3 @@
-
 """Shared helpers for the Streamlit dashboard.
 
 Provides theme-adaptive styling and error-tolerant loading for model artifacts.
@@ -268,9 +267,7 @@ def card(title: str, body: str) -> None:
 
 def risk_badge(category: str) -> None:
     """Render a badge for a risk category."""
-    background, foreground = RISK_COLORS.get(
-        category, (SLATE, WHITE)
-    )
+    background, foreground = RISK_COLORS.get(category, (SLATE, WHITE))
 
     st.markdown(
         f"""
@@ -308,12 +305,21 @@ def get_bundle() -> Any:
         return None
 
 
-def missing_artifacts_warning(metrics: Any = None) -> None:
-    """Warn when model artifacts or evaluation metrics are unavailable."""
+def missing_artifacts_warning(metrics: Any = None) -> bool:
+    """Warn when model artifacts or evaluation metrics are unavailable.
+
+    Returns:
+        True if metrics are unavailable and the warning is displayed.
+        False if metrics loaded successfully.
+    """
+    if metrics is not None:
+        return False
+
     st.warning(
         "Model artifacts or evaluation metrics could not be loaded. "
         "Please check that the trained model files are available."
     )
+    return True
 
 
 def fmt_prob(value: Any) -> str:
@@ -333,7 +339,7 @@ def fmt_metric(value: Any, digits: int = 3) -> str:
 
 
 def styled_df(df: pd.DataFrame) -> Any:
-    """Return a dataframe styled for display."""
+    """Return a styled dataframe."""
     return df.style
 
 
@@ -364,9 +370,7 @@ def new_fig(
     elif len(args) == 1:
         figsize = args[0]
     elif len(args) > 2:
-        raise TypeError(
-            "new_fig accepts at most two positional arguments"
-        )
+        raise TypeError("new_fig accepts at most two positional arguments")
 
     dark = _is_dark_theme()
 
@@ -413,9 +417,7 @@ def confusion_matrix_figure(
     fig.patch.set_facecolor(background)
     ax.set_facecolor(background)
 
-    display_labels = (
-        labels if labels is not None else ["No Failure", "Failure"]
-    )
+    display_labels = labels if labels is not None else ["No Failure", "Failure"]
 
     display = ConfusionMatrixDisplay(
         confusion_matrix=confusion_matrix,
